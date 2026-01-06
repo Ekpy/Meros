@@ -1,6 +1,8 @@
-import { tts } from '../services/tts.js'
+import { tts } from '../services/tts.js';
 import {
   ApplicationCommandOptionType,
+  InteractionResponse,
+  InteractionResponseType,
   type CommandInteraction,
 } from 'discord.js';
 import { Discord, Slash, SlashOption } from 'discordx';
@@ -24,11 +26,11 @@ export class SpeakSlashCommand {
       return;
     }
 
-    // await interaction.deferReply();
-
     const member = await guild.members.fetch(interaction.user.id);
     const voiceChannel = member.voice.channel;
 
     await tts(text, member, voiceChannel, guild, interaction);
+
+    interaction.reply({ content: `Speaking: ${text}`, flags: ['Ephemeral'] });
   }
 }

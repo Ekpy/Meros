@@ -1,4 +1,3 @@
-import gTTS from 'gtts';
 import { createAudioResource } from '@discordjs/voice';
 import { VoiceConnectionManager } from '../managers/voiceConnectionManager.js';
 import {
@@ -10,8 +9,8 @@ import {
   VoiceBasedChannel,
 } from 'discord.js';
 import { UserPreferences } from './UserPreferences.js';
-import { Readable } from 'stream';
 import { config } from '../config.js';
+import gTTS from './tts/gtts/gtts.js';
 
 type ReplyTarget = Message<boolean> | CommandInteraction<CacheType>;
 
@@ -51,7 +50,7 @@ export async function tts(
 
   const voice = await UserPreferences.getVoice(user.id);
   const gtts = new gTTS(trimmed_text, voice);
-  const resource = createAudioResource(gtts.stream() as Readable);
+  const resource = createAudioResource(await gtts.stream());
 
   connectionData.player.play(resource);
 }

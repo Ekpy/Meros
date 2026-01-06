@@ -26,9 +26,11 @@ npm run watch
 ```
 
 To manually run database migrations:
+
 ```
 kysely migrate up
 ```
+
 New migrations are also ran on startup.
 
 To get typehints, run `kysely-codegen` after running migrations.
